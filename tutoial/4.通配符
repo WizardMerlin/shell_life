@@ -1,0 +1,50 @@
+GLobbing(匹配)
+
+通配符大致包括:(3个, 称为wildcard)
+1. * 
+2. ? 
+3. []  匹配方括号中任意一个字符一次
+
+
+例如:
+   1. ls /dev/ttyS*    (匹配ttyS后面的多个字符)
+   2. ls /dev/ttyS?    (只匹配ttyS?后面的1个字符)
+   3. ls /dev/ttyS[789] (匹配ttyS后面括号中字符的1一个字符)
+
+其结果是:
+$ ls /dev/ttyS*
+/dev/ttyS0   /dev/ttyS11  /dev/ttyS14  /dev/ttyS17  /dev/ttyS2   /dev/ttyS22  /dev/ttyS25  /dev/ttyS28  /dev/ttyS30  /dev/ttyS5  /dev/ttyS8
+/dev/ttyS1   /dev/ttyS12  /dev/ttyS15  /dev/ttyS18  /dev/ttyS20  /dev/ttyS23  /dev/ttyS26  /dev/ttyS29  /dev/ttyS31  /dev/ttyS6  /dev/ttyS9
+/dev/ttyS10  /dev/ttyS13  /dev/ttyS16  /dev/ttyS19  /dev/ttyS21  /dev/ttyS24  /dev/ttyS27  /dev/ttyS3   /dev/ttyS4   /dev/ttyS7
+
+$ ls /dev/ttyS?
+/dev/ttyS0  /dev/ttyS1  /dev/ttyS2  /dev/ttyS3  /dev/ttyS4  /dev/ttyS5  /dev/ttyS6  /dev/ttyS7  /dev/ttyS8  /dev/ttyS9
+
+$ ls /dev/ttyS[789]
+/dev/ttyS7  /dev/ttyS8  /dev/ttyS9
+
+
+关于中括号的补充:
+
+1. 简便写法
+   ls /dev/ttyS[789]
+   可以换一种写法:
+   ls /dev/ttyS[7-9]
+
+
+2. 多个[]一起用(因为一个[]最多只能匹配一个字符)
+如果要匹配ttyS17,ttyS27,ttyS18,ttyS28, 可以使用2个[],例如:
+ls /dev/ttyS[1-2][7-8]
+
+结果如下:
+ls /dev/ttyS[1-2][7-8]
+/dev/ttyS17  /dev/ttyS18  /dev/ttyS27  /dev/ttyS28
+
+
+
+---
+一般情况下用wildcard的3个做globbing已经足够了,不够的情况用正则表达式.
+(正则表达式种, 同名的符号可能表示不同的函数---注意区别一下)
+(正则表达式需要单独学习, 多且杂, 但是用好了, 威力无穷)
+
+

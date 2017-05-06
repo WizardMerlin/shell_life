@@ -1,0 +1,41 @@
+主要讲for, while以及break, continue
+1. for
+(更像是foreach)
+
+  for var in a b c; do
+      echo "var = $var"
+  done
+结果:
+  var = a
+  var = b
+  var = c
+
+可以写一个脚本看一下本目录下哪些是文件,哪些是目录,参见loop.sh
+
+总结一下就是:
+for <var> in <list> ; do
+    <To-DO>
+done
+
+
+2. while
+(while/do/done)
+while [  ]; do
+      <TODO>
+done
+
+例如要用户循环输入,直到输入ok才推出的程序:
+echo "plz input sth"
+read try
+while [ "$try" != "ok" ] ; do
+    echo "plz input ok"
+    read try
+done
+
+
+3. break[n]
+   可以指定跳出几层循环
+
+4. continue
+   跳过本次循环的剩余代码,但不会跳出
+

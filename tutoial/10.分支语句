@@ -1,0 +1,88 @@
+主要是if/elif/else(then), case.
+
+
+分支结构 if/else, case分支
+1.if/else语法
+   第一种写法:
+      if 测试条件
+      then 
+	 命令1
+      fi
+	 命令2
+				  
+				  
+   第二种写法:
+      if 测试条件 then;
+      	 命令1
+      fi	
+	 命令2
+
+										
+   多分支的写法:		
+       if 测试条件
+       then
+	 命令1
+       elif 测试条件2
+       then     	   
+         命令2				
+       elif 测试条件3				
+       then 			
+	 命令3			        
+       else
+         命令4							   
+       fi
+
+   但是注意, 有个特殊的,冒号引出来的,永远为真的(比较古怪,可以不用记忆)
+   if :; then
+      echo "always true";
+   fi
+   (冒号就相当于你写了一个1)
+
+       
+2.case语法:(精确匹配,而不是if-else的模糊匹配)
+   (注意;;的使用, 相当于break;)
+   case <value> in
+   	pattern 1)
+			命令1;;
+	pattern 2)
+			命令2;;
+	pattern 3)
+			命令3;;
+		*)
+			命令4;;	
+   esac
+
+   最后一条是default选项,表示全匹配.
+   此外pattern语句支持逻辑或, 例如:				
+   pattern1 | pattern2)
+			 命令;;			
+
+   也支持采用通配符, 例如:   
+   [yY][eE][sS])
+		命令;;
+
+   可以根据分支的语法写一个menu.sh:
+   
+   #!/bin/bash
+   #menu.sh
+
+   echo "1. save"
+   echo "2. load"
+   echo "3. exit"
+
+   echo  #输出换行符
+   echo "plz choose"
+   read choice
+
+   case $choice in
+     1)
+	echo "u choose 1.save";;
+     2)
+        echo "u choose 2.load";;
+     3 | e)
+	echo "u choose 3 or exit";;
+     *)
+	echo "invalid choice"
+        exit 1;;
+  esac
+  exit 0

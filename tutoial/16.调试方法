@@ -1,0 +1,62 @@
+shell脚本的调试方法:
+
+sh [option] ./script
+
+
+option的选项
+
+1. 不执行脚本的调试:
+-n 读一遍脚本的命令, 但是不执行(用于查看语法错误)
+
+2. 边执行,边调试:
+-v 一边执行脚本, 一边将执行过的脚本命令打印到标准错误输出
+-x 提供跟踪信息, 将执行的每一条命令和结果依次打印出来
+
+用的比较多的是-n参数, 模拟执行以下.
+(Makefile脚本, make命令也有一个-n和这个作用一样)
+
+
+使用方法: (推荐用.或者bash执行)
+1. bash -n ./script.sh  
+   没有执行权限的,一般都是这样写: . script -n
+
+
+(-x和-v的使用, 推荐使用-x, 而不要使用-v, verbose的信息很乱)
+   
+2. 脚本文件里    #!/bin/bash -x   
+   并且在需要执行并追踪的脚本段里面写上:
+   set -x以及set +x
+   启用和禁用(set -x调试开始, set +x调试结束)
+   (被包裹的内容是, 打印执行的语句, 以及其结果)
+
+   例如:
+   #!/bin/bash -x
+
+   set -x
+   echo "run first statement"
+   echo "run second statement"
+   set +x
+   echo "last"
+
+
+   执行结果如下:(. debug.sh)
+   ++ echo 'run first statement'
+   run first statement
+   ++ echo 'run second statement'
+   run second statement
+   ++ set +x
+   last
+
+
+   
+调试技巧:
+1. 代码特别多的
+   加打印语句输出; 或者使用-x包裹,用-n模拟执行
+   
+2. 代码少的, 直接看源码
+   (胶水语言, 基本上就是把几个语言粘合在一起, 一般都是500行以内)
+   
+简单总结就是:
+语法错误----用-n模拟执行
+逻辑错误----直接看源码,分析
+

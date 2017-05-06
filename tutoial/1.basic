@@ -1,0 +1,122 @@
+0. 为什么学习shell?
+   有些工作,批量执行一些命令;有些工作可以自动化.
+   在linux下, 正好用shell来解决上述问题.
+
+   最简单的, 我新切换了一个ubuntu(从12,切换到17),有很多软件我又要重新装.
+   -----用一个脚本解决吧.
+
+1. shell的原理
+  命令解析器, 后台进程.
+  shell脚本是解释执行的,写的是ASCII文本,直接用解释器运行,不需要编译.
+  (但是运行时,加载器还是需要的)
+
+  在终端里面输入普通命令---->shell进程(解释器)---->找到并执行具体的可执行文件
+  (命令分为:普通命令, 内建命令; 下面第9条)
+  
+  手动指定解析器:
+  /bin/bash pwd
+
+2. 查看有哪些shell
+   cat /etc/shells
+
+   /bin/sh
+   /bin/dash
+   /bin/bash
+   /bin/rbash
+   /usr/bin/screen
+   /sbin/nologin
+   
+3. 查看当前使用的shell
+   echo $SHELL
+   /bin/bash
+
+4. 根据path环境变量提供的地址,查询用户输入的可执行命令
+   echo $PATH
+
+5. 各种shell之间有一些区别:
+   比如说/bin/sh和/bin/bash, 后者在"着色显示", "补全"等易用性方面进行了提升.
+
+   (linux下编程一般使用的是GNU实现的bash)
+   
+6. 基本格式(详见first.sh, 注意加上"执行权限")
+
+   一般以.sh结尾, 内容基本框架如下:
+
+   #!/bin/bash  指定解释器(如果你不写,那么默认就按照$SHELL指定的)
+   #单行注释用井号 (上面指定bash解释器, 井号和叹号必须在一起)
+
+   echo "first code"
+
+   #调用别的shell命令, 新进程
+   /bin/ls
+
+7. 几种执行方式(下面的命令,一般是自己写的shell脚本文件)
+   ./命令 (命令必须具有可执行权限)
+   . 命令   (用于没有执行权限的sh文件)---参见second.sh
+   /bin/bash 命令
+   source 命令
+
+   
+8. 关于source命令
+
+   source filename [arguments]
+	
+   man手册里面是这么说的:
+
+   Read and execute commands from filename in the current shell environment and return the exit status of the last command executed from filename.  
+   If file‐name  does  not  contain  a slash, file names in PATH are used to find the directory containing filename.  
+
+   The file searched for in PATH need not be exe‐cutable.  
+
+   When bash is not in posix mode, the current directory is searched if no file is found in PATH.
+
+   If the sourcepath option to the  shopt  builtin command is turned off, the PATH is not searched.  
+   If any arguments are supplied, they become the positional parameters when filename is executed.  
+   Other‐wise the positional parameters are unchanged.
+
+   The return status is the status of the last command exited within the script (0 if no  commands  are  exe‐cuted), and false if filename is not found or cannot be read.
+
+   -------
+   总结一下:
+    Read and execute commands from filename in the current shell environment and return the exit status of the last command executed from filename.  
+
+    如果source的sh里面含有定义的变量/函数, 那么这些变量/函数,将被该shell共享(其他命令执行的时候,默认可以使用这些变量和函数;当然也会有覆盖问题)
+
+    ----这个"3.变量"再说.
+
+
+9. 关于命令
+   就一句话: 内建命令不依赖解析器.(解析器执行依赖PATH环境变量)
+
+   换句话说: 内建命令不依赖环境变量PATH,普通命令依赖.
+   (需要环境变量指定才能正确执行的,是普通命令)
+
+   举个例子:(参见 third.sh)
+   #! /bin/bash
+
+
+   # 第一次执行ls和cd
+
+   cd /
+   ls
+
+   
+
+   # 把环境变量设置为空
+   export PATH=
+
+   cd /
+   ls
+
+   -----
+   可以看到上面的程序, 执行第二个ls的时候, 提示找不到命令:
+   "bash: ls: No such file or directory"
+
+   其他详细信息参考: man 7 bash-builtins
+   
+
+   
+
+
+   
+   

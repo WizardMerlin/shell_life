@@ -1,0 +1,103 @@
+定义: shell中的函数, 没有返回值, 也没有参数列表.
+调用: 直接在脚本中写函数名字就可以了.
+
+
+
+例如:
+func(){
+  echo "function calling."
+}
+
+
+echo "start call func"
+
+func
+
+echo "func called"
+
+
+
+------------
+关于参数传递
+
+函数内部可以通过 $[1-9]拿到参数, 传递参数是在调用的时候进行的.
+
+例如:
+
+func1(){
+  echo "function calling."
+  echo "$0"
+  echo "$1"
+  echo "$2"
+}
+
+
+echo "start call func1"
+
+#pass argument
+func1 a b c
+
+echo "func1 called"
+
+
+可以看到函数内部的$0和函数外部的$0是一样的.
+
+函数内部的其他预定义变量?
+
+$#   表示传递给函数的参数个数($1开始)
+$@   表示传递给函数的所有参数
+$$   还是表示进程号
+
+(函数内部的变量相当于内部变量, 并不会影响到函数外部的变量)
+
+
+分支语句,如果要测试,可以把测试直接接在if后面:
+
+is_directory(){
+
+  DIR_NAME=$1
+  if [ ! -d $DIR_NAME  ] ; then
+     return 1
+  else
+     return 0
+  fi
+     
+}
+
+for DIR in "$@"; do
+    #关键看这句
+    if is_directory "$DIR" ; then
+       echo "$DIR is a directory,already exists"
+    else
+       echo "$DIR does not exist,create it"
+       mkdir "$DIR" > /dev/null 2>&1
+       if [ $? -ne 0  ] ;then
+       	  echo "create directory failed"
+	  return 1
+       fi
+    fi
+done
+
+
+注意: 把所有错误信息全部输出到/dev/null
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

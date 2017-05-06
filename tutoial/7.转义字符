@@ -1,0 +1,27 @@
+一般就是指的是反斜杠(左倒)
+
+1. 让命令不再执行
+   echo $SHELL和echo \$SHELL
+
+
+2. 文件名字带有特殊字符
+   #创建一个文件名为$test.sh的文件
+   touch \$test.sh
+   (删除的时候也要带上专一rm \$test.sh)
+
+   如果你文件中特殊字符太多了,比如说-abc
+   touch -abc.sh这样的方式就会和touch命令的选项参数冲突:
+   touch: invalid option -- 'b'
+   Try `touch --help' for more information.
+   (从结果来看-对于a来说,已经转移;但是对于b则没有)
+
+
+   解决方法:
+   1.借用当前目录的路径 ./
+   例如: 
+   touch ./-abc.sh
+   (删除: rm ./--abc.sh)
+   
+   2. 使用 -- 选项
+   touch -- -abc.sh
+   rm -- -abc.sh
