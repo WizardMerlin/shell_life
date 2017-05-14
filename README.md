@@ -12,12 +12,8 @@
 2. 私人博客: https://wizardmerlin.github.io/
    (主要是概括性的文章, 思考, 书评, 翻译, 深入剖析)
 3. 社区博客:(讨论开源, 提问 & 回答别人的问题)
-
-   https://my.oschina.net/wizardmerlin/blog
-   
-   https://segmentfault.com/u/wizardmerlin
-
-
+* https://my.oschina.net/wizardmerlin/blog  (讨论 & 简单的教程)
+* https://segmentfault.com/u/wizardmerlin  (问答)
 
    当然也欢迎你加入我们的日常组, 高级Linux开发群: `59151639`
 
@@ -87,7 +83,7 @@ shell语法比较多,同一种操作,同一个语句都会有多种写法.
 
 # 尾巴
 
-代码规范 ---- 参考上级目录中`<shell代码规范>`
+代码规范 ---- 参考同级目录中 `<shell代码规范>`	
 
 这里只算是入门, 深入awk 和 sed, 正则之后, 才算shell学会了.
 
